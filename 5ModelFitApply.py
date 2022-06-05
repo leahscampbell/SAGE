@@ -31,17 +31,14 @@ from iGDE_lib import *
 nTrees = 90
 
 #Which iteration (can just set to 1)
-runNumber = 6
-
-
+runNumber = 1
 
 #Runs of models to iterate across
 #Specify a descriptive name and then the selectors of the predictor fields
 runs = [[runname,predictors],
+#Example of a list of different runs:
 # ['climate',['.*mean_LT_fitted','.*mean_LT_mag']],
-]
 # ['climate-strata',['.*mean_LT_fitted','.*mean_LT_mag','Ecoregion_Number','Biome_Number','Macrogroup_Number','Hydroregion_Number']],\
-
 # ['climate-spectral-strata-fitted-only',['.*_fitted','Ecoregion_Number','Biome_Number','Macrogroup_Number','Hydroregion_Number']],\
 # ['climate-spectral-strata-mag-only',['.*_mag','Ecoregion_Number','Biome_Number','Macrogroup_Number','Hydroregion_Number']],\
 # ['climate-spectral',['.*_fitted','.*_mag']],\
