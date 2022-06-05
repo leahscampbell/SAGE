@@ -26,6 +26,8 @@ SOFTWARE.
 from iGDE_lib import *
 ####################################################################################################
 #Define user parameters:
+runModel = True # Run model and save to GEE asset
+downloadOutputs = False #Once the model has been run and outputs saved to GEE asset, export it in CSV format to Google Drive to be used for further analysis.
 
 #Number of trees in RF model
 nTrees = 90
@@ -171,21 +173,24 @@ def downloadModeledOutputs(removeGeometry = True):
     t.start()
 ####################################################################################################
 #Function calls
-#Iterate across each run and fit, summarize, and apply model
-for run in runs:
 
-  #Get predictor field namesss
-  predictorFields = ee.Feature(trainingTable.select(run[1]).first()).propertyNames().remove('system:index').getInfo()
+if runModel:
+  #Iterate across each run and fit, summarize, and apply model
+  for run in runs:
 
-  #Fit model
-  rfModel  = fitRFModel(trainingTable,predictorFields,run[0])
+    #Get predictor field namesss
+    predictorFields = ee.Feature(trainingTable.select(run[1]).first()).propertyNames().remove('system:index').getInfo()
 
-  #Get model info
-  #getRFModelInfo(rfModel,os.path.join(outputLocalRFModelInfoDir,'dgwRFModelInfo-{}.json'.format(run[0])))
+    #Fit model
+    rfModel  = fitRFModel(trainingTable,predictorFields,run[0])
 
-  #Apply and export model
-  #batchApplyRFModel(rfModel,trainingTable,predictorFields,run[0])
+    #Get model info / Accuracies
+    getRFModelInfo(rfModel,os.path.join(outputLocalRFModelInfoDir,'dgwRFModelInfo-{}.json'.format(run[0])))
 
-#Once the predictions are all exported, export them to Drive
-downloadModeledOutputs()
+    #Apply and export model
+    batchApplyRFModel(rfModel,trainingTable,predictorFields,run[0])
+
+elif downloadOutput:
+  #Once the predictions are all exported, export them to Drive
+  downloadModeledOutputs()
 ####################################################################################################
