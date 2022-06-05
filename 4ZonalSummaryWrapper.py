@@ -26,6 +26,8 @@ SOFTWARE.
 from iGDE_lib import *
 ####################################################################################################
 #User params defined in iGDE_lib.py
+export_apply_tables = True
+export_training_tables = False #Must be done after exporting apply tables
 ####################################################################################################
 #Function to get an image collection of LandTrendr outputs for all bands to then summarize with iGDE zonal stats (means)
 def getLT(ltCollection,ltBands):
@@ -160,17 +162,20 @@ def getTrainingTable(startTrainingYear,endTrainingYear,dgwNullValue = -999,maxDG
 
 ####################################################################################################
 #Function calls
-#Get fitted LT collection
-#durFitMagSlope = getLT(ltCollection,ltBands)
+if export_apply_tables:
+  #Get fitted LT collection
+  durFitMagSlope = getLT(ltCollection,ltBands)
 
-#First, export model apply tables
-#batchExportApplyTables(startApplyYear,endApplyYear,durFitMagSlope)
+  #First, export model apply tables
+  batchExportApplyTables(startApplyYear,endApplyYear,durFitMagSlope)
 
-#Add MXStatus to apply tables
-#batchExportMXStatus(startApplyYear,endApplyYear,outputApplyTableDir, 'dgwRFModelingApplyTable4', 'dgwRFModelingApplyTable5')
+  #Add MXStatus to apply tables
+  if 'MXStatus' in predictors:
+    batchExportMXStatus(startApplyYear,endApplyYear,outputApplyTableDir, 'dgwRFModelingApplyTable4', 'dgwRFModelingApplyTable5')
 
-#Once apply tables are finished exporting, export model training table
-getTrainingTable(startTrainingYear,endTrainingYear,dgwNullValue,maxDGW,minDGW)
+elif export_training_tables:
+  #Once apply tables are finished exporting, export model training table
+  getTrainingTable(startTrainingYear,endTrainingYear,dgwNullValue,maxDGW,minDGW)
 
 #View map
 # Map.view()
