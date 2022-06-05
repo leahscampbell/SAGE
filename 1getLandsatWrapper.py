@@ -45,8 +45,8 @@ endJulian = 273
 # More than a 3 year span should be provided for time series methods to work 
 # well. If providing pre-computed stats for cloudScore and TDOM, this does not 
 # matter
-startYear = 2020
-endYear = 2020
+startYear = 1984
+endYear = 2019
 
 # Specify an annual buffer to include imagery from the same season 
 # timeframe from the prior and following year. timeBuffer = 1 will result 
@@ -171,7 +171,7 @@ correctScale = 250 #Choose a scale to reduce on- 250 generally works well
 
 # Export params
 # Whether to export composites
-exportComposites = False
+exportComposites = True
 
 # Set up Names for the export
 outputName = 'Landsat'
